@@ -1,20 +1,19 @@
 package org.example;
 
-import org.example.loose.UserService;
+import org.example.looseCouplingWithAnnotations.*;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 
 public class Main {
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext("applicationBeanContext.xml");
+        System.out.println("Starting Spring Application Context");
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 
-        GreetingServiceDemo greetingServiceDemo = (GreetingServiceDemo) context.getBean("myBean");
-        greetingServiceDemo.sayHello();
+        System.out.println("Retrieving LifeCycle Bean");
+        LifeCycleBean lifeCycleBean = context.getBean(LifeCycleBean.class);
+        lifeCycleBean.performTask();
 
-        UserService userService = (UserService) context.getBean("UserServiceSMS");
-        userService.notifyUser("What's up!");
-
-        UserService userServiceEmail = (UserService) context.getBean("UserServiceEmail");
-        userServiceEmail.notifyUser("Welcome Prakash!");
+        System.out.println("Closing Spring Context");
     }
 }
